@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khiel Decena | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --green:#00ff41;--green-dim:#00cc33;--green-dark:#003b00;--green-faint:#001500;
+    --bg:#0a0a0a;--bg2:#111;--bg3:#161616;--border:#003b00;
+    --text:#00ff41;--text-dim:#00aa2b;--text-muted:#006618;
+    --font:'Share Tech Mono',monospace;--font2:'Fira Code',monospace;
+    --scanline:rgba(0,255,65,0.03);
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:var(--font2);font-size:14px;line-height:1.7;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,var(--scanline) 2px,var(--scanline) 4px);
+    pointer-events:none;z-index:9999;
+  }
+  ::selection{background:var(--green);color:#000}
+  a{color:var(--green-dim);text-decoration:none}
+  a:hover{color:var(--green);text-decoration:underline}
+
+  nav{
+    position:fixed;top:0;left:0;width:100%;
+    background:rgba(10,10,10,0.95);
+    border-bottom:1px solid var(--border);
+    padding:12px 0;z-index:1000;
+    backdrop-filter:blur(4px);
+  }
+  .nav-inner{
+    max-width:960px;margin:0 auto;padding:0 2rem;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-logo{font-family:var(--font);font-size:18px;color:var(--green);letter-spacing:2px}
+  .nav-logo span{color:var(--text-dim)}
+  .nav-links{display:flex;gap:2rem}
+  .nav-links a{font-size:12px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase}
+  .nav-links a:hover{color:var(--green);text-decoration:none}
+  .cursor-blink{animation:blink 1s step-end infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+  main{max-width:960px;margin:0 auto;padding:0 2rem}
+
+  #hero{
+    min-height:100vh;display:flex;flex-direction:column;
+    justify-content:center;padding-top:80px;
+  }
+  .terminal-window{
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .terminal-bar{
+    background:var(--bg3);
+    border-bottom:1px solid var(--border);
+    padding:8px 16px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .dot{width:12px;height:12px;border-radius:50%;border:1px solid}
+  .dot-r{border-color:#ff5f57}
+  .dot-y{border-color:#febc2e}
+  .dot-g{border-color:var(--green-dim)}
+  .terminal-title{flex:1;text-align:center;font-size:11px;color:var(--text-muted);letter-spacing:2px}
+  .terminal-body{padding:1.5rem 2rem;min-height:320px}
+  .t-line{margin-bottom:4px;font-size:13px}
+  .t-prompt{color:var(--green-dim)}
+  .t-cmd{color:var(--green)}
+  .t-out{color:var(--text-dim);padding-left:1rem}
+  .t-name{
+    font-family:var(--font);font-size:clamp(28px,5vw,52px);
+    color:var(--green);letter-spacing:4px;
+    margin:1rem 0 0.5rem;line-height:1.1;
+  }
+  .t-role{color:var(--text-dim);font-size:14px;letter-spacing:2px;margin-bottom:1.5rem}
+  .t-tag{
+    display:inline-block;
+    border:1px solid var(--green-dark);
+    color:var(--text-dim);font-size:11px;
+    padding:3px 10px;margin:3px;border-radius:2px;
+    letter-spacing:1px;
+  }
+  .hero-btns{margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap}
+  .btn{
+    font-family:var(--font2);font-size:12px;
+    padding:10px 20px;border-radius:2px;cursor:pointer;
+    letter-spacing:2px;text-transform:uppercase;
+    border:1px solid var(--green-dim);
+    color:var(--green);background:transparent;
+    transition:all 0.2s;text-decoration:none;display:inline-block;
+  }
+  .btn:hover{background:var(--green);color:#000;text-decoration:none}
+  .btn-ghost{border-color:var(--text-muted);color:var(--text-dim)}
+  .btn-ghost:hover{background:var(--text-dim);color:#000}
+
+  section{padding:80px 0}
+  .section-label{
+    font-family:var(--font);font-size:11px;
+    color:var(--text-muted);letter-spacing:4px;text-transform:uppercase;
+    margin-bottom:0.5rem;
+  }
+  .section-title{
+    font-family:var(--font);font-size:clamp(20px,3vw,32px);
+    color:var(--green);letter-spacing:2px;
+    margin-bottom:2.5rem;
+    border-bottom:1px solid var(--border);
+    padding-bottom:1rem;
+  }
+  .section-title::before{content:'> ';color:var(--text-muted)}
+
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+  .about-text{color:var(--text-dim);font-size:13px;line-height:1.9}
+  .about-text p{margin-bottom:1rem}
+  .highlight{color:var(--green)}
+  .about-stats{display:flex;flex-direction:column;gap:1rem}
+  .stat-row{
+    background:var(--bg2);border:1px solid var(--border);
+    padding:1rem 1.25rem;border-radius:2px;
+  }
+  .stat-label{font-size:10px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+  .stat-value{font-size:15px;color:var(--green);letter-spacing:1px}
+
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem}
+  .skill-card{
+    background:var(--bg2);border:1px solid var(--border);
+    padding:1.25rem;border-radius:2px;
+    transition:border-color 0.2s;
+  }
+  .skill-card:hover{border-color:var(--green-dim)}
+  .skill-category{
+    font-size:10px;letter-spacing:3px;text-transform:uppercase;
+    color:var(--text-muted);margin-bottom:0.75rem;
+  }
+  .skill-category::before{content:'# '}
+  .skill-list{display:flex;flex-wrap:wrap;gap:6px}
+  .skill-pill{
+    font-size:11px;padding:3px 10px;
+    border:1px solid var(--green-dark);color:var(--text-dim);
+    border-radius:2px;letter-spacing:1px;
+    transition:all 0.15s;cursor:default;
+  }
+  .skill-pill:hover{background:var(--green-dark);color:var(--green)}
+
+  .project-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:2px;margin-bottom:1.5rem;overflow:hidden;
+    transition:border-color 0.2s;
+  }
+  .project-card:hover{border-color:var(--green-dim)}
+  .project-header{
+    background:var(--bg3);border-bottom:1px solid var(--border);
+    padding:1rem 1.5rem;display:flex;align-items:center;gap:1rem;
+    justify-content:space-between;flex-wrap:wrap;
+  }
+  .project-name{font-family:var(--font);font-size:16px;color:var(--green);letter-spacing:1px}
+  .project-badges{display:flex;gap:6px;flex-wrap:wrap}
+  .badge{
+    font-size:10px;padding:2px 8px;
+    border:1px solid var(--green-dark);color:var(--text-dim);
+    border-radius:2px;letter-spacing:1px;text-transform:uppercase;
+  }
+  .badge-lang{border-color:#00aa2b;color:#00aa2b}
+  .project-body{padding:1.5rem}
+  .project-desc{color:var(--text-dim);font-size:13px;line-height:1.8;margin-bottom:1.25rem}
+  .project-features{margin-bottom:1.25rem}
+  .features-label{font-size:10px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.5rem}
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px}
+  .feature-item{
+    font-size:11px;color:var(--text-dim);padding:4px 0;
+    padding-left:1rem;position:relative;
+  }
+  .feature-item::before{content:'→ ';color:var(--text-muted);position:absolute;left:0}
+  .tech-stack{display:flex;gap:6px;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+  .tech-item{
+    font-size:11px;color:var(--text-dim);padding:3px 8px;
+    background:var(--green-faint);border:1px solid var(--border);
+    border-radius:2px;letter-spacing:1px;
+  }
+  .project-links{display:flex;gap:1rem;margin-top:1.5rem}
+  .proj-btn{
+    font-size:11px;padding:6px 14px;
+    border:1px solid var(--green-dark);color:var(--text-dim);
+    border-radius:2px;letter-spacing:1px;text-transform:uppercase;
+    cursor:pointer;background:transparent;font-family:var(--font2);
+    text-decoration:none;transition:all 0.15s;display:inline-block;
+  }
+  .proj-btn:hover{background:var(--green);color:#000;text-decoration:none;border-color:var(--green)}
+
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+  .contact-info{color:var(--text-dim);font-size:13px}
+  .contact-line{
+    display:flex;align-items:center;gap:0.75rem;
+    padding:0.75rem 0;border-bottom:1px solid var(--border);
+  }
+  .contact-icon{color:var(--text-muted);font-size:12px;letter-spacing:1px;min-width:80px}
+  .contact-val a{color:var(--green-dim)}
+  .contact-val a:hover{color:var(--green)}
+  .contact-card{
+    background:var(--bg2);border:1px solid var(--border);
+    padding:1.5rem;border-radius:2px;
+  }
+  .contact-card-title{font-size:12px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem}
+  .avail-badge{
+    display:inline-block;
+    padding:4px 12px;
+    border:1px solid var(--green-dim);color:var(--green);
+    font-size:11px;letter-spacing:2px;border-radius:2px;
+    margin-bottom:1rem;
+  }
+  .avail-badge::before{content:'● ';animation:blink 1.5s step-end infinite}
+
+  footer{
+    border-top:1px solid var(--border);
+    padding:2rem;text-align:center;
+    color:var(--text-muted);font-size:11px;letter-spacing:2px;
+    max-width:960px;margin:0 auto;
+  }
+
+  @keyframes glitch{
+    0%,100%{transform:translate(0)}
+    20%{transform:translate(-2px,1px)}
+    40%{transform:translate(2px,-1px)}
+    60%{transform:translate(-1px,2px)}
+    80%{transform:translate(1px,-2px)}
+  }
+  .t-name:hover{animation:glitch 0.3s ease}
+
+  @media(max-width:640px){
+    .about-grid,.contact-grid{grid-template-columns:1fr}
+    .nav-links{gap:1rem}
+    .terminal-body{padding:1rem}
+    .terminal-body{padding:1rem 1.25rem}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">KD<span>@terminal</span><span class="cursor-blink">_</span></div>
+    <div class="nav-links">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <section id="hero">
+    <div class="terminal-window">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="terminal-title">~/portfolio — bash</div>
+      </div>
+      <div class="terminal-body" id="terminal-body">
+        <div class="t-line"><span class="t-prompt">root@kd:~$</span> <span class="t-cmd">whoami</span></div>
+        <div class="t-line t-out" id="line-name" style="display:none"></div>
+        <div class="t-line" id="line-cmd2" style="display:none"><span class="t-prompt">root@kd:~$</span> <span class="t-cmd">cat ./profile.json</span></div>
+        <div id="profile-block" style="display:none">
+          <div class="t-name">KHIEL DECENA</div>
+          <div class="t-role">// CS STUDENT &nbsp;|&nbsp; ASPIRING DEV &nbsp;|&nbsp; FUTURE AI ENGINEER</div>
+          <div style="margin-bottom:0.5rem">
+            <span class="t-tag">Python</span>
+            <span class="t-tag">Java</span>
+            <span class="t-tag">C/C++</span>
+            <span class="t-tag">JavaScript</span>
+            <span class="t-tag">Go</span>
+            <span class="t-tag">Laravel</span>
+            <span class="t-tag">Git</span>
+            <span class="t-tag">MySQL</span>
+          </div>
+          <div class="hero-btns">
+            <a href="#projects" class="btn">view_projects()</a>
+            <a href="#contact" class="btn btn-ghost">contact_me()</a>
+          </div>
+        </div>
+        <div class="t-line" id="line-prompt3" style="display:none"><span class="t-prompt">root@kd:~$</span> <span class="cursor-blink">_</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-label">01 / about_me.txt</div>
+    <div class="section-title">about_me</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Hi! I'm <span class="highlight">Khiel Decena</span>, a Full-Stack Developer learner focused on building strong programming fundamentals and real-world development skills.</p>
+        <p>I enjoy learning how systems work under the hood and turning ideas into functional applications. My current journey includes mastering multiple programming languages, strengthening problem-solving skills, and exploring modern development tools.</p>
+        <p>I'm also interested in <span class="highlight">AI agents</span>, software engineering, and creating real-world projects that solve practical problems.</p>
+        <p style="color:var(--green);font-size:12px;letter-spacing:1px;border-left:2px solid var(--green);padding-left:1rem;margin-top:1.5rem">
+          🎯 Goal: Build strong fundamentals and become a confident Full-Stack + AI Developer.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-row">
+          <div class="stat-label">current_status</div>
+          <div class="stat-value">CS Student · Philippines</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">focus_areas</div>
+          <div class="stat-value">Backend · AI Agents · Systems</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">learning_now</div>
+          <div class="stat-value">Go · Data Structures · ML Basics</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">interests</div>
+          <div class="stat-value">Open Source · Automation · DevTools</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">version_control</div>
+          <div class="stat-value">github.com/KhielDecena</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-label">02 / skills.json</div>
+    <div class="section-title">tech_stack</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-category">Languages</div>
+        <div class="skill-list">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">Java</span>
+          <span class="skill-pill">C</span>
+          <span class="skill-pill">C++</span>
+          <span class="skill-pill">JavaScript</span>
+          <span class="skill-pill">Go</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Web Dev</div>
+        <div class="skill-list">
+          <span class="skill-pill">HTML</span>
+          <span class="skill-pill">CSS</span>
+          <span class="skill-pill">Laravel</span>
+          <span class="skill-pill">PHP</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Tools & DevOps</div>
+        <div class="skill-list">
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">GitHub</span>
+          <span class="skill-pill">VS Code</span>
+          <span class="skill-pill">NetBeans</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Database</div>
+        <div class="skill-list">
+          <span class="skill-pill">MySQL</span>
+          <span class="skill-pill">SQLite</span>
+          <span class="skill-pill">JDBC</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Concepts</div>
+        <div class="skill-list">
+          <span class="skill-pill">OOP</span>
+          <span class="skill-pill">MVC</span>
+          <span class="skill-pill">CRUD</span>
+          <span class="skill-pill">DSA (learning)</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-category">Exploring</div>
+        <div class="skill-list">
+          <span class="skill-pill">AI Agents</span>
+          <span class="skill-pill">Automation</span>
+          <span class="skill-pill">Backend Dev</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-label">03 / projects.log</div>
+    <div class="section-title">featured_projects</div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div>
+          <div class="project-name">SCIMS</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;letter-spacing:1px">San-Antonio Campus Inventory Management System</div>
+        </div>
+        <div class="project-badges">
+          <span class="badge badge-lang">Java</span>
+          <span class="badge">Desktop App</span>
+          <span class="badge">MIT License</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">
+          A desktop-based inventory application designed to modernize how academic institutions manage assets, equipment, and supplies. Replaces manual and error-prone inventory methods with a centralized, secure, and efficient solution that improves accountability and operational visibility.
+        </div>
+        <div class="project-features">
+          <div class="features-label">core features</div>
+          <div class="features-grid">
+            <div class="feature-item">Inventory CRUD management</div>
+            <div class="feature-item">Role-based authentication</div>
+            <div class="feature-item">Stock level monitoring</div>
+            <div class="feature-item">Transaction history logging</div>
+            <div class="feature-item">Dashboard overview</div>
+            <div class="feature-item">Search &amp; filter system</div>
+            <div class="feature-item">Inventory reports</div>
+            <div class="feature-item">MVC architecture</div>
+          </div>
+        </div>
+        <div class="tech-stack">
+          <span class="tech-item">Java 17</span>
+          <span class="tech-item">Java Swing</span>
+          <span class="tech-item">MySQL</span>
+          <span class="tech-item">SQLite</span>
+          <span class="tech-item">JDBC</span>
+          <span class="tech-item">NetBeans</span>
+          <span class="tech-item">MVC Pattern</span>
+          <span class="tech-item">Git</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/KhielDecena" target="_blank" class="proj-btn">view_on_github()</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card" style="border-style:dashed;opacity:0.6">
+      <div class="project-header">
+        <div class="project-name" style="color:var(--text-dim)">next_project.exe</div>
+        <span class="badge">in progress</span>
+      </div>
+      <div class="project-body">
+        <div class="project-desc">// Currently building something new. Stay tuned.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-label">04 / contact.sh</div>
+    <div class="section-title">get_in_touch</div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-line">
+          <span class="contact-icon">// email</span>
+          <span class="contact-val"><a href="mailto:khielcoding@gmail.com">khielcoding@gmail.com</a></span>
+        </div>
+        <div class="contact-line">
+          <span class="contact-icon">// github</span>
+          <span class="contact-val"><a href="https://github.com/KhielDecena" target="_blank">github.com/KhielDecena</a></span>
+        </div>
+        <div class="contact-line">
+          <span class="contact-icon">// facebook</span>
+          <span class="contact-val"><a href="https://www.facebook.com/khiel.decena.921" target="_blank">khiel.decena.921</a></span>
+        </div>
+        <div class="contact-line">
+          <span class="contact-icon">// instagram</span>
+          <span class="contact-val"><a href="https://instagram.com/Khiel_decena" target="_blank">@Khiel_decena</a></span>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-title">system_status.json</div>
+        <div class="avail-badge">OPEN TO OPPORTUNITIES</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
+          <div>→ Internships &amp; training</div>
+          <div>→ Collaborative projects</div>
+          <div>→ Open source contributions</div>
+          <div>→ Learning opportunities</div>
+        </div>
+        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
+          <div style="font-size:10px;color:var(--text-muted);letter-spacing:2px;margin-bottom:6px">LOCATION</div>
+          <div style="font-size:13px;color:var(--text-dim)">Philippines 🇵🇭</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div style="margin-bottom:0.5rem">
+    <span style="color:var(--green)">khiel@decena</span><span style="color:var(--text-muted)">:~$</span>
+    <span style="color:var(--text-dim)"> echo "consistency beats intensity"</span>
+  </div>
+  <div style="color:var(--text-muted)">© 2025 Khiel Decena · Built with ❤️ &amp; caffeine</div>
+</footer>
+
+<script>
+  const delay = ms => new Promise(r => setTimeout(r, ms));
+  async function bootSequence() {
+    await delay(400);
+    const lineName = document.getElementById('line-name');
+    lineName.style.display = 'block';
+    lineName.textContent = '';
+    for (let c of 'Khiel Decena') { lineName.textContent += c; await delay(60); }
+    await delay(300);
+    document.getElementById('line-cmd2').style.display = 'block';
+    await delay(500);
+    document.getElementById('profile-block').style.display = 'block';
+    await delay(200);
+    document.getElementById('line-prompt3').style.display = 'block';
+  }
+  bootSequence();
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
